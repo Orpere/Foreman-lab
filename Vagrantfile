@@ -10,8 +10,8 @@ sudo yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.n
 sudo yum -y install https://yum.theforeman.org/releases/1.18/el7/x86_64/foreman-release.rpm
 sudo yum -y install foreman-installer
 sudo foreman-installer | tee outputfile.txt
-sudo systemctl enable httpd 
-sudo reboot 
+sudo systemctl restart httpd
+sudo systemctl start forman.service
 SCRIPT
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
