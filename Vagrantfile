@@ -11,7 +11,6 @@ sudo yum -y install https://yum.theforeman.org/releases/1.18/el7/x86_64/foreman-
 sudo yum -y install foreman-installer
 sudo foreman-installer | tee outputfile.txt
 sudo systemctl restart httpd
-sudo systemctl start forman.service
 SCRIPT
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -26,7 +25,6 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "centos/7"
-  config.vm.network :private_network, :auto_network => true
   #config.vm.network :public_network, :auto_network => true
   
     config.vm.define "foreman" do |foreman|
@@ -35,6 +33,7 @@ Vagrant.configure("2") do |config|
       v.cpus = 4
     end
       foreman.vm.hostname = "foreman.orplab.xt"
+      foreman.vm.network :private_network, :auto_network => true
       foreman.vm.provision :hostsupdate, run: 'always' do |foreman|
         foreman.hostname = "foreman.orplab.xt"
         foreman.manage_guest = true
@@ -48,6 +47,7 @@ Vagrant.configure("2") do |config|
 
   (1..3).each do |i|
     config.vm.define "node-#{i}" do |node|
+    node.vm.network :private_network, :auto_network => true
       node.vm.provision :hostsupdate, run: 'always' do |node|
         node.hostname = "node-#{i}.orplab.xt"
         node.manage_guest = true
